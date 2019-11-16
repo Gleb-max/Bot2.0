@@ -3,7 +3,7 @@ from flask import Flask, request
 import telebot
 
 
-INFO = "{0}\nId: {1}\nFirst: {2}\nLast: {3}\nLang: {4}"
+INFO = "@{0}\nId: {1}\nFirst: {2}\nLast: {3}\nLang: {4}"
 GREETING = "Hi, {0}!"
 TOKEN = os.getenv('TG_API_TOKEN')
 bot = telebot.TeleBot(TOKEN)
@@ -12,7 +12,7 @@ server = Flask(__name__)
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    bot.send_message(message, GREETING.format(message.from_user.first_name))
+    bot.send_message(message.chat.id, GREETING.format(message.from_user.first_name,))
     # bot.reply_to(message, 'Привет, %s!' % message.from_user.first_name)
 
 
