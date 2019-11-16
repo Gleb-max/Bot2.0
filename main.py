@@ -3,6 +3,7 @@ from flask import Flask, request
 import telebot
 
 
+INFO = "Id: {0}\nFirst: {1}\nLast: {2}"
 TOKEN = os.getenv('TG_API_TOKEN')
 bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
@@ -15,6 +16,11 @@ def start(message):
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def echo_message(message):
+    bot.send_message(message.chat.id, INFO.format(
+        message.from_user.id,
+        message.from_user.first_name,
+        message.from_user.last_name,
+    ))
     bot.reply_to(message, message.text)
 
 
